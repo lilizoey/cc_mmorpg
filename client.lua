@@ -75,7 +75,7 @@ local function move_character()
     return nil
   end
 
-  rednet.send(server_id, {op = "move_player", player_id = current_character.id, new_location = new_location})
+  rednet.send(server_id, {op = "move_player", player_id = current_character.id, new_location = new_location}, protocol)
 end
 
 while true do

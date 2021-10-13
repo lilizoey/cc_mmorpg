@@ -9,17 +9,17 @@ local monitor = peripheral.find("monitor")
 
 local function log(mode, text)
   if mode == 1 then
-    local original_color = term.getTextColor
+    local original_color = term.getTextColor()
     term.setTextColor(colors.gray)
     print("INFO: " .. text)
     term.setTextColor(original_color)
   elseif mode == 2 then
-    local original_color = term.getTextColor
+    local original_color = term.getTextColor()
     term.setTextColor(colors.white)
     print("WARNING: " .. text)
     term.setTextColor(original_color)
   elseif mode == 3 then
-    local original_color = term.getTextColor
+    local original_color = term.getTextColor()
     term.setTextColor(colors.red)
     print("ERROR: " .. text)
     term.setTextColor(original_color)
@@ -35,7 +35,7 @@ local function create_player(client_id, name)
   local player_id = #players + 1
   new_player["id"] = player_id
   players[player_id] = new_player
-  log(1, "Created player " .. name .. " at location " .. spawn .. "with id" .. player_id)
+  log(1, "Created player " .. new_player.name .. " at location " .. new_player.location .. " with id " .. player_id)
   return new_player
 end
 
