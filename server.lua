@@ -49,7 +49,7 @@ local function show_stats()
   monitor.setCursorPos(1,1)
 
   for k,v in pairs(players) do
-    monitor.write("player: " .. v.name .. " is at: " .. v.location)  
+    monitor.write("player: " .. v.name .. " is at: " .. v.location .. "\n")
   end
 end
 
