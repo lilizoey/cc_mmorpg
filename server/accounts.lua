@@ -3,7 +3,7 @@ local exports = {}
 local accounts = {}
 
 local function save()
-  local file = io.open("accounts", "w")
+  local file = io.open("accountsdb", "w")
   io.output(file)
   io.write(textutils.serialize(accounts))
   io.close(file)
