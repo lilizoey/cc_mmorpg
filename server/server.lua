@@ -4,12 +4,12 @@ local chat = require("chat")
 function _G.log(mode, text)
   if mode == 0 then
     local original_color = term.getTextColor()
-    term.setTextColor(colors.darkgray)
+    term.setTextColor(colors.gray)
     print("DEBUG: " .. text)
     term.setTextColor(original_color)
   elseif mode == 1 then
     local original_color = term.getTextColor()
-    term.setTextColor(colors.gray)
+    term.setTextColor(colors.lightGray)
     print("INFO: " .. text)
     term.setTextColor(original_color)
   elseif mode == 2 then

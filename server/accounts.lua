@@ -10,7 +10,7 @@ local function save()
 end
 
 local function load()
-  local file = io.open("accounts", "w")
+  local file = io.open("accountsdb", "w")
   io.input(file)
   local lines = io.read()
   if not lines then 

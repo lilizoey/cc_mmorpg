@@ -133,6 +133,7 @@ local function leave_room()
   if current_room then
     rednet.send(chat_server_ip, {username = current_account.username, room_name = current_room}, chat_protocol)
   end
+  current_room = nil
 end
 
 local function join_room()
@@ -153,6 +154,7 @@ local function join_room()
 
   if result then
     state = "chat"
+    current_room = room_name
   else
     print("Error joining room " .. room_name)
   end
