@@ -93,7 +93,7 @@ local function update_chat()
 end
 
 local function send_message(text)
-  rednet.send(chat_server_ip, {username = current_account.username, room_name = current_room, message = text}, chat_protocol)
+  rednet.send(chat_server_ip, {op = "send", username = current_account.username, room_name = current_room, message = text}, chat_protocol)
 end
 
 local function chat_keys()
@@ -194,7 +194,7 @@ local function main()
     else
       while current_account do
         if state == "chat" then
-          parallel.waitForAny(chat_keys, update_chat)
+          parallel.waitForAny(chat_keys, update_chat, display_chat)
         else
           menu()
         end

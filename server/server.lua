@@ -2,7 +2,12 @@ _G.accounts = require("accounts")
 local chat = require("chat")
 
 function _G.log(mode, text)
-  if mode == 1 then
+  if mode == 0 then
+    local original_color = term.getTextColor()
+    term.setTextColor(colors.darkgray)
+    print("DEBUG: " .. text)
+    term.setTextColor(original_color)
+  elseif mode == 1 then
     local original_color = term.getTextColor()
     term.setTextColor(colors.gray)
     print("INFO: " .. text)

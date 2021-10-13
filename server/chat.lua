@@ -19,6 +19,7 @@ local function create_room(creator, name)
     creator = creator,
     users = {}
   }
+  log(1, "user with id" .. rooms[name].creator .. "created room with name " .. name)
 end
 
 local function join_room(client_id, username, room_name)
@@ -31,6 +32,8 @@ local function join_room(client_id, username, room_name)
   end
 
   rooms[room_name].users[username] = {client_id = client_id, username = username, join_time = os.clock()}
+
+  log(1, "user " .. username .. " joined the room " .. room_name)
 
   return true
 end
@@ -45,6 +48,8 @@ local function leave_room(client_id, username, room_name)
   end
 
   rooms[room_name].users[username] = nil
+
+  log(1, "user " .. username .. " left the room " .. room_name)
 end
 
 local function send_message(client_id, username, room_name, message)
@@ -58,7 +63,10 @@ local function send_message(client_id, username, room_name, message)
 
   for k, user in pairs(rooms[room_name].users) do
     rednet.send(user.client_id, {op = "chat_msg", username = username, message = message}, protocol)
+    log(0, "sending message to " .. user.username)
   end
+
+  log(1, username .. " sent a message to room " .. room_name)
 end
 
 local function main()
@@ -102,6 +110,6 @@ local function timeout_handler()
   end
 end
 
-exports.coroutines = {main, timeout_handler}
+exports.coroutines = {main}
 
 return exports
