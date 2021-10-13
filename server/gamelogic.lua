@@ -7,25 +7,6 @@ rednet.host(protocol, hostName)
 local players = {}
 local monitor = peripheral.find("monitor")
 
-local function log(mode, text)
-  if mode == 1 then
-    local original_color = term.getTextColor()
-    term.setTextColor(colors.gray)
-    print("INFO: " .. text)
-    term.setTextColor(original_color)
-  elseif mode == 2 then
-    local original_color = term.getTextColor()
-    term.setTextColor(colors.white)
-    print("WARNING: " .. text)
-    term.setTextColor(original_color)
-  elseif mode == 3 then
-    local original_color = term.getTextColor()
-    term.setTextColor(colors.red)
-    print("ERROR: " .. text)
-    term.setTextColor(original_color)
-  end
-end
-
 local function create_player(client_id, name)
   local new_player = {
     client_id = client_id,
