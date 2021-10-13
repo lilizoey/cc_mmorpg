@@ -53,14 +53,16 @@ local function leave_room(client_id, username, room_name)
 end
 
 local function send_message(client_id, username, room_name, message)
+  log(0, "starting send_message")
   if not accounts.authenticate(client_id, username) then
     return
   end
-
+  log(0, "authenticated " .. username)
   if not rooms[room_name] then
     return
   end
-
+  log(0, "room was found")
+  
   for k, user in pairs(rooms[room_name].users) do
     rednet.send(user.client_id, {op = "chat_msg", username = username, message = message}, protocol)
     log(0, "sending message to " .. user.username)
