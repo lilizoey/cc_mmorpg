@@ -55,14 +55,18 @@ end
 
 while true do
   show_stats()
-  local sender_id, msg, protcol = rednet.receive(protocol)
+  local sender_id, msg, p = rednet.receive(protocol)
   if msg and msg["op"] then
-    if msg["op"] == "create" then
-      create_player(sender_id, msg.name)
-    elseif msg["op"] == "move" then
+    if msg["op"] == "create_player" then
+      local player = create_player(sender_id, msg.name)
+      rednet.send(sender_id, player, protocol)
+    elseif msg["op"] == "move_player" then
       change_location(sender_id, msg.player_id, msg.new_location)
-    elseif msg["op"] == "change_id" then
+    elseif msg["op"] == "change_player_id" then
       change_client(sender_id, msg.player_id, msg.new_id)
+    elseif msg["op"] == "get_player" then
+      local player = get_player(sender_id, msg.player_id)
+      rednet.send(sender_id, player, protocol)
     end
   end
 end
