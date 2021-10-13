@@ -66,6 +66,7 @@ local function main()
     local sender_id, msg, p = rednet.receive(protocol)
 
     if msg and msg["op"] then
+      log(1, "received msg with opcode: \"" .. msg.op .. "\"")
       if msg.op == "create" then
         create_room(sender_id, msg.name)
       elseif msg.op == "join" then

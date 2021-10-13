@@ -44,7 +44,7 @@ local function create_account()
   io.input(io.stdin)
   local username = io.read()
 
-  rednet.send(server_ip, {op = "create", username = username}, account_server_ip)
+  rednet.send(account_server_ip, {op = "create", username = username}, accounts_protocol)
   local account = rednet.receive(accounts_protocol)
   if not account then
     print("Username already taken or not valid")
@@ -58,7 +58,7 @@ local function log_in()
   io.input(io.stdin)
   local username = io.read()
 
-  rednet.send(server_ip, {op = "login", username = username}, account_server_ip)
+  rednet.send(account_server_ip, {op = "login", username = username}, accounts_protocol)
   local account = nil
 
   repeat
@@ -113,6 +113,22 @@ local function chat_keys()
   end
 end
 
+local function cls()
+  print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+end
+
+local function display_chat()
+  while true do
+    cls()
+    for k,v in pairs(chat) do
+      print("[" .. v.username .. "]: " .. v.message)
+    end
+    print("-------------------")
+    print(text_box)
+    os.sleep(1)
+  end
+end
+
 local function leave_room()
   if current_room then
     rednet.send(chat_server_ip, {username = current_account.username, room_name = current_room}, chat_protocol)
@@ -128,7 +144,7 @@ local function join_room()
   io.input(io.stdin)
   local room_name = io.read()
 
-  rednet.send(server_ip, {op = "join", username = current_account.username, room_name = room_name}, chat_server_ip)
+  rednet.send(chat_server_ip, {op = "join", username = current_account.username, room_name = room_name}, chat_protocol)
   local result = nil
   repeat
     local sender_id, msg, p = rednet.receive(chat_protocol)
@@ -147,7 +163,7 @@ local function create_room()
   io.input(io.stdin)
   local room_name = io.read()
 
-  rednet.send(server_ip, {op = "create", name = room_name}, chat_server_ip)
+  rednet.send(chat_server_ip, {op = "create", name = room_name}, chat_protocol)
 end
 
 local function log_out()

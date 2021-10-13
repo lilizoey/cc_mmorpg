@@ -12,7 +12,11 @@ end
 local function load()
   local file = io.open("accounts", "w")
   io.input(file)
-  accounts = textutils.unserialize(io.read())
+  local lines = io.read()
+  if not lines then 
+    return
+  end
+  accounts = textutils.unserialize(lines)
   io.close(file)
 end
 
