@@ -195,9 +195,33 @@ function ChatClient:display()
   self:draw_chat()
 end
 
+ChatClient.keymap = {
+  keys.one = "1",
+  keys.two = "2",
+  keys.three = "3",
+  keys.four = "4",
+  keys.five = "5",
+  keys.six = "6",
+  keys.seven = "7",
+  keys.eight = "8"
+  keys.nine = "9",
+  keys.zero = "0",
+
+  keys.space = " ",
+}
+
 function ChatClient:parse_text_key(key)
   if key == keys.backspace then
     self.text_box = string.sub(self.text_box, 1, string.len(self.text_box) - 1)
+  elseif string.len(keys.getName(key)) == 1 then
+    keys.rig
+    if self.held_keys[keys.leftShift] or self.held_keys[keys.rightShift] then
+      self.text_box = self.text_box .. string.upper(keys.getName(key))
+    else
+      self.text_box = self.text_box .. keys.getName(key)
+    end
+  elseif self.keymap[key] then
+    self.text_box = self.text_box .. self.keymap[key]
   end
 end
 
@@ -233,12 +257,18 @@ function ChatClient:handle_input()
 end
 
 function ChatClient:handle_key_up()
-  local event, key = os.pullEvent("key_up")
-  self.held_keys[key] = nil
+  while true do
+    local event, key = os.pullEvent("key_up")
+    self.held_keys[key] = nil
+  end
 end
 
 function ChatClient:exec()
-
+  parallel.waitForAny(
+    function () self:handle_key_up() end,
+    function () self:handle_input() end,
+    function () self:display() end,
+  )
 end
 
 local function main()
