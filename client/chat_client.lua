@@ -195,20 +195,19 @@ function ChatClient:display()
   self:draw_chat()
 end
 
-ChatClient.keymap = {
-  keys.one = "1",
-  keys.two = "2",
-  keys.three = "3",
-  keys.four = "4",
-  keys.five = "5",
-  keys.six = "6",
-  keys.seven = "7",
-  keys.eight = "8"
-  keys.nine = "9",
-  keys.zero = "0",
+ChatClient.keymap = {}
+ChatClient.keymap[keys.one] = "1"
+ChatClient.keymap[keys.two] = "2"
+ChatClient.keymap[keys.three] = "3"
+ChatClient.keymap[keys.four] = "4"
+ChatClient.keymap[keys.five] = "5"
+ChatClient.keymap[keys.six] = "6"
+ChatClient.keymap[keys.seven] = "7"
+ChatClient.keymap[keys.eight] = "8"
+ChatClient.keymap[keys.nine] = "9"
+ChatClient.keymap[keys.zero] = "0"
+ChatClient.keymap[keys.space] = " "
 
-  keys.space = " ",
-}
 
 function ChatClient:parse_text_key(key)
   if key == keys.backspace then
