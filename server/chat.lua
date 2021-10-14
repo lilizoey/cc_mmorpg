@@ -71,6 +71,14 @@ local function send_message(client_id, username, room_name, message)
   log(1, username .. " sent a message to room " .. room_name)
 end
 
+local function get_rooms()
+  local room_names = {}
+  for k,v in pairs(rooms) do
+    table.insert(room_names, k)
+  end
+  return room_names
+end
+
 local function main()
   while true do
     local sender_id, msg, p = rednet.receive(protocol)
@@ -87,6 +95,8 @@ local function main()
       elseif msg.op == "send" then
         send_message(sender_id, msg.username, msg.room_name, msg.message)
       elseif msg.op == "list" then
+        local rooms = get_rooms()
+        rednet.send(sender_id, rooms, protocol)
       elseif msg.op == "list_in" then
       end
 
